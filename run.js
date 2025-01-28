@@ -41,6 +41,9 @@ async function spamPackageDownload(packageName, count) {
   }
 }
 
-const downloadcCount = parseInt(process.argv[2]) || 10;
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+const arg = process.argv[2];
+const downloadcCount = arg ? parseInt(arg) : getRandomInt(10_000, 15_000);
 
 spamPackageDownload("react-pre-hooks", downloadcCount);
