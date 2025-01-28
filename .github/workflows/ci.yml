@@ -23,4 +23,9 @@ jobs:
         run: bun install
       
       - name: Run script with input number
-        run: bun run.js ${{ inputs.number }}
+        if: github.event_name == 'workflow_dispatch'
+        run: bun run.js "${{ inputs.number }}"
+      
+      - name: Run script without input number
+        if: github.event_name == 'schedule'
+        run: bun run.js
