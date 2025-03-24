@@ -21,7 +21,8 @@ jobs:
       run: |
         ISSUE_URL=$(gh issue create --title "Issue" --body "")
         ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oP '\d+$')
+        echo "issue_number=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
     
     - name: Close Issue
       run: |
-        gh issue close ${{ steps.created-issue.outputs.ISSUE_NUMBER }}
+        gh issue close ${{ steps.created-issue.outputs.issue_number }}
