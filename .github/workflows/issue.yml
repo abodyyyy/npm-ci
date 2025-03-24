@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  schedule:
+    - cron: '0 0 */5 * *'  # Runs at midnight every 5 days
+  workflow_dispatch:
+
+jobs:
+  issue:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up GitHub CLI
+      uses: actions/setup-gh-cli@v1
+    
+    - name: Create Issue
+      id: created-issue
+      run: |
+        ISSUE_URL=$(gh issue create --title "Issue" --body "")
+    
+    - name: Close Issue
+      run: |
+        gh issue close ${{ steps.created-issue.outputs.issue_url }}
